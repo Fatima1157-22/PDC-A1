@@ -14,6 +14,8 @@ int maxNumbers(int *array, int size){
     //Variable to store the count
     int count =0;
 
+    omp_set_num_threads(8);
+
     /*First try to get parallelization using Critical
     Critical made the execution time go near 15 sec which is not even beteer than seq. 0.8 sec.
     
@@ -35,7 +37,7 @@ int maxNumbers(int *array, int size){
     // }
 
     //Using reduction method and achieved the result at its best 0.091 sec.
-    #pragma omp parallel for reduction(+:count) schedule(static)
+    #pragma omp parallel for reduction(+:count) schedule(dynamic)
     for( int i = 0; i < size; i++){
         if(array[i] > THRESHOLD){
             #pragma omp atomic
