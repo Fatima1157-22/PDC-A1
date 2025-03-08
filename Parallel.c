@@ -26,7 +26,16 @@ int maxNumbers(int *array, int size){
     }*/
 
     //Doing atomic but execution time does not make any fine difference but better than critical not seq.
-    #pragma omp parallel for schedule(static)
+    // #pragma omp parallel for schedule(static)
+    // for( int i = 0; i < size; i++){
+    //     if(array[i] > THRESHOLD){
+    //         #pragma omp atomic
+    //         count++;
+    //     }
+    // }
+
+    //Using reduction method and achieved the result at its best 0.091 sec.
+    #pragma omp parallel for reduction(+:count) schedule(static)
     for( int i = 0; i < size; i++){
         if(array[i] > THRESHOLD){
             #pragma omp atomic
