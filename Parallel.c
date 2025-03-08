@@ -14,11 +14,22 @@ int maxNumbers(int *array, int size){
     //Variable to store the count
     int count =0;
 
-    //First try to get parallelization using Critical
+    /*First try to get parallelization using Critical
+    Critical made the execution time go near 15 sec which is not even beteer than seq. 0.8 sec.
+    
     #pragma omp parallel for schedule(static)
     for( int i = 0; i < size; i++){
         if(array[i] > THRESHOLD){
             #pragma omp critical
+            count++;
+        }
+    }*/
+
+    //Doing atomic but execution time does not make any fine difference but better than critical not seq.
+    #pragma omp parallel for schedule(static)
+    for( int i = 0; i < size; i++){
+        if(array[i] > THRESHOLD){
+            #pragma omp atomic
             count++;
         }
     }
