@@ -57,5 +57,7 @@ int main(){
     printf("Total numbers greater than threshold %d: %d\n", THRESHOLD, count);
     printf("Execution Time for sequential code: %f seconds\n", execution_time);
 
-
+    free(array);
+    
+    return 0;
 }
